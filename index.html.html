@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .image-container {
+            position: relative;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 400px;
+            height: 400px;
+            margin-top: 50px;
+            cursor: pointer;
+        }
+
+        #click-counter {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        #follower-image {
+            position: fixed;
+            pointer-events: none;
+        }
+
+        /* Classe CSS para animação */
+        .rotate {
+            animation: spin 3s linear infinite;
+        }
+
+        /* Keyframes para a animação */
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <title>Imagens Clicáveis</title>
+</head>
+<body>
+    <div style="text-align: center;">
+      <h1 style="font-family: 'Comic Sans MS', cursive;">Ajude o Felipe a comer o brownie!</h1>
+        <div class="image-container">
+            <img id="image" src="1.png" alt="Imagem 1">
+        </div>
+        <div id="click-counter">brownies comidos: 0</div>
+    </div>
+
+    <img id="follower-image" src="f.png" alt="Imagem F">
+
+    <script>
+        var image = document.getElementById("image");
+        var imageList = ["1.png", "2.png", "3.png", "4.png", "5.png", "7.png"];
+        var imageIndex = 0;
+        var clickCounter = parseInt(localStorage.getItem("clickCounter")) || 0;
+        var clickCounterElement = document.getElementById("click-counter");
+        var followerImage = document.getElementById("follower-image");
+
+        updateClickCounter();
+
+        image.addEventListener("click", function() {
+            imageIndex++;
+            if (imageIndex >= imageList.length) {
+                imageIndex = 0;
+            }
+            image.src = imageList[imageIndex];
+
+            if (image.src.includes("7.png")) {
+                clickCounter++;
+                updateClickCounter();
+            }
+        });
+
+        document.addEventListener("mousemove", function(event) {
+            var mouseX = event.clientX;
+            var mouseY = event.clientY;
+
+            followerImage.style.left = mouseX - followerImage.width / 2 + "px";
+            followerImage.style.top = mouseY - followerImage.height / 2 + "px";
+        });
+
+        /* Adiciona a classe CSS de animação à imagem */
+        function rotateImage() {
+            image.classList.add("rotate");
+        }
+
+        /* Remove a classe CSS de animação da imagem */
+        function stopRotation() {
+            image.classList.remove("rotate");
+        }
+
+        /* Inicia a animação quando a página é carregada */
+        rotateImage();
+
+        /* Para a animação quando a página é fechada */
+        window.addEventListener("beforeunload", function() {
+            stopRotation();
+        });
+
+        function updateClickCounter() {
+            clickCounterElement.textContent = "brownies comidos: " + clickCounter;
+            localStorage.setItem("clickCounter", clickCounter);
+			
+        }
+    </script>
+</body>
+</html>
