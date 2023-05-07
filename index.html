@@ -64,7 +64,7 @@
 
     <script>
         var image = document.getElementById("image");
-        var imageList = ["1.png", "2.png", "3.png", "4.png", "5.png", "7.png"];
+        var imageList = ["1.png", "2.png", "3.png", "4.png", "5.png", "8.png"];
         var imageIndex = 0;
         var clickCounter = parseInt(localStorage.getItem("clickCounter")) || 0;
         var clickCounterElement = document.getElementById("click-counter");
@@ -79,7 +79,7 @@
             }
             image.src = imageList[imageIndex];
 
-            if (image.src.includes("7.png")) {
+            if (image.src.includes("8.png")) {
                 clickCounter++;
                 updateClickCounter();
             }
